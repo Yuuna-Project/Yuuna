@@ -55,7 +55,9 @@ namespace Yuuna.ControlFlow
 
         private void Process(object sender, MessageEventArgs e)
         {
-            var result = CallbackStatusFactory.Success(e.Message, MoodKinds.Mad);
+            // e.Message is Command
+
+            var result = CallbackStatusFactory.Success(e.Message, MoodKinds.ForTest);
 
             this._onReceived.Invoke(this, new StatusEventArgs(result));
         }

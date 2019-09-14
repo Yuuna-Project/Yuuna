@@ -4,9 +4,7 @@ namespace Yuuna.ControlFlow
     using System;
 
     public class TextInput : ITextInput, IBindable
-    {
-        public Guid Owner => this._token.Value;
-
+    { 
         private Guid? _token;
 
         public event EventHandler<MessageEventArgs> OnSend;

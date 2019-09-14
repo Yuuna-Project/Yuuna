@@ -19,11 +19,17 @@
             var kernel = new Kernel();
             var ti = new TextInput();
             kernel.Bind(ti);
-            var fbs = new FeedbackSink();
+            var fbs = new UI();
             kernel.Bind(fbs);
-            ti.Send("XXXX");
-
-
+            ti.Send("XXXX"); 
         } 
+    }
+
+    class UI : FeedbackSink
+    {
+        protected override void OnReceived(object sender, StatusEventArgs e)
+        {
+            System.Console.WriteLine(e.Status.Message.Content);
+        }
     }
 }
