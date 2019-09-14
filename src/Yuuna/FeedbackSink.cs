@@ -5,16 +5,17 @@ namespace Yuuna.ControlFlow
 
     public class FeedbackSink : IFeedbackSink, IBindable
     {
-        void IFeedbackSink.Received(ICallbackStatus status)
+        public Guid Owner => this._token.Value;
+        void IFeedbackSink.Received(object sender, StatusEventArgs e)
         {
             if (this._token is null)
                 throw new Exception("尚未將此物件綁定至交互服務");
-            this.OnReceived(status);
+            this.OnReceived(this, e);
         }
 
-        protected virtual void OnReceived(ICallbackStatus status)
+        protected virtual void OnReceived(object sender, StatusEventArgs e)
         {
-            Console.WriteLine(status.Message.Content);
+            Console.WriteLine(e.Status.Message.Content);
         }
 
         private Guid? _token;

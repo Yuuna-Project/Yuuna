@@ -3,7 +3,7 @@ namespace Yuuna.ControlFlow
 {
     public interface IFeedbackSink
     {
-        void Received(ICallbackStatus callbackStatus);
+        void Received(object sender, StatusEventArgs e);
     }
 
 

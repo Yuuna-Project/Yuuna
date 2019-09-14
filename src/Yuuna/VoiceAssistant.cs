@@ -16,11 +16,11 @@
     {
         private void Run()
         {
-            var interactive = new Kernel();
+            var kernel = new Kernel();
             var ti = new TextInput();
-            interactive.Bind(ti);
+            kernel.Bind(ti);
             var fbs = new FeedbackSink();
-            interactive.Bind(fbs);
+            kernel.Bind(fbs);
             ti.Send("XXXX");
 
 
