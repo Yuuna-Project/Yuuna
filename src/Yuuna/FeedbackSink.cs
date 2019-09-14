@@ -3,9 +3,8 @@ namespace Yuuna.ControlFlow
 {
     using System;
 
-    public class FeedbackSink : IFeedbackSink, IBindable
+    public abstract class FeedbackSink : IFeedbackSink, IBindable
     {
-        public Guid Owner => this._token.Value;
         void IFeedbackSink.Received(object sender, StatusEventArgs e)
         {
             if (this._token is null)
@@ -13,10 +12,7 @@ namespace Yuuna.ControlFlow
             this.OnReceived(this, e);
         }
 
-        protected virtual void OnReceived(object sender, StatusEventArgs e)
-        {
-            Console.WriteLine(e.Status.Message.Content);
-        }
+        protected abstract void OnReceived(object sender, StatusEventArgs e);
 
         private Guid? _token;
         void IBindable.BindTo(ITokenizable tokenizable)
