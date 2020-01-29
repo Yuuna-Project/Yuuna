@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <ApplicationIcon />
+    <StartupObject />
+    <UserSecretsId>9a20e10b-0220-492e-bd4c-2ad9189e2e4c</UserSecretsId>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Yuuna.Common">
+      <HintPath>..\Yuuna.Contracts\bin\Debug\netcoreapp3.0\Yuuna.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Yuuna.Contracts">
+      <HintPath>..\Yuuna.Contracts\bin\Debug\netcoreapp3.0\Yuuna.Contracts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="mkdir $(SolutionDir)..\Yuuna\bin\Debug\netcoreapp3.0\modules\Test&#xD;&#xA;copy $(TargetPath) $(SolutionDir)..\Yuuna\bin\Debug\netcoreapp3.0\modules\Test" />
+  </Target>
+
+</Project>

@@ -33,53 +33,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Castle.Core.4.2.1\lib\net45\Castle.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Config.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=d836a57afd299520, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Config.Net.4.13.7\lib\net452\Config.Net.dll</HintPath>
-    </Reference>
-    <Reference Include="Config.Net.Yaml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=d836a57afd299520, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Config.Net.Yaml.4.13.7\lib\net452\Config.Net.Yaml.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="YamlDotNet, Version=6.0.0.0, Culture=neutral, PublicKeyToken=ec19458f3c15af5e, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\YamlDotNet.6.0.0\lib\net45\YamlDotNet.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CallbackStatusFactory.cs" />
-    <Compile Include="Dlr\Internal\Fields.cs" />
-    <Compile Include="Dlr\Internal\MetaObject.cs" />
-    <Compile Include="Dlr\Synthesis.cs" />
-    <Compile Include="ControlFlow\ITokenizable.cs" />
-    <Compile Include="FeedbackSink.cs" />
-    <Compile Include="IBindable.cs" />
-    <Compile Include="ICallbackStatus.cs" />
-    <Compile Include="IFeedbackSink.cs" />
-    <Compile Include="ITextInput.cs" />
-    <Compile Include="Kernel.cs" />
-    <Compile Include="Message.cs" />
-    <Compile Include="MessageEventArgs.cs" />
-    <Compile Include="MoodKinds.cs" />
-    <Compile Include="TextInput.cs" />
-    <Compile Include="VoiceAssistant.g.cs" />
-    <Compile Include="VoiceAssistant.cs" />
+    <Compile Include="Entrypoint.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
