@@ -1,12 +1,9 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Patterns
 {
-    using System;
-
-    using Yuuna.Common.Artisan.Cascade;
-
     //internal sealed class IncompleteBuilder : Output<Incomplete>, IIncompleteBuilder
     //{
     //    public void OnIncomplete(Incomplete incomplete)

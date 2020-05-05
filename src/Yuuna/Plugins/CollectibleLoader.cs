@@ -1,10 +1,11 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna
 {
-    using System.Runtime.Loader;
     using System.Reflection;
+    using System.Runtime.Loader;
 
     public sealed class CollectibleLoader : AssemblyLoadContext
     {
@@ -13,7 +14,7 @@ namespace Yuuna
         // https://docs.microsoft.com/zh-tw/dotnet/standard/assembly/unloadability
 
         internal CollectibleLoader(string mainAssemblyToLoadPath) : base(true)
-        { 
+        {
             this._resolver = new AssemblyDependencyResolver(mainAssemblyToLoadPath);
         }
 

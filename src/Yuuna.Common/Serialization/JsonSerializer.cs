@@ -1,9 +1,12 @@
-﻿
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Common.Serialization
 {
-    using System.IO;
     using Newtonsoft.Json;
+
+    using System.IO;
 
     internal sealed class JsonSerializer : Serializer
     {

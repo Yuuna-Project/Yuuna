@@ -1,13 +1,21 @@
-﻿
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Interaction.AspNetCore.Mvc.Models
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Text;
     using Yuuna.Contracts.Interaction;
 
     public class Output
     {
+        public string Message { get; }
+
+        public string Mood { get; }
+
+        public bool Success { get; }
+
+        public string Text { get; }
+
         public Output(bool success, string message, Mood mood, string text)
         {
             this.Success = success;
@@ -15,9 +23,5 @@ namespace Yuuna.Interaction.AspNetCore.Mvc.Models
             this.Mood = mood.Name;
             this.Text = text;
         }
-        public bool Success { get; }
-        public string Message { get; }
-        public string Mood { get; }
-        public string Text { get; }
     }
 }

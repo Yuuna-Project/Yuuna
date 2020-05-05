@@ -1,30 +1,31 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.TextSegmention
 {
     using JiebaNet.Segmenter;
 
-    using System;
     using System.Collections.Immutable;
     using System.Diagnostics;
-    using System.Globalization; 
+    using System.Globalization;
+
     using Yuuna.Contracts.Semantics;
     using Yuuna.Contracts.TextSegmention;
 
     public sealed class JiebaTextSegmenter : ITextSegmenter
     {
+        private readonly JiebaSegmenter _jieba;
+
+        public CultureInfo Culture { get; }
+
+        string ITextSegmenter.Name => "Jieba.Net";
+
         public JiebaTextSegmenter()
         {
             this._jieba = new JiebaSegmenter();
-            this.Culture = CultureInfo.GetCultureInfo("zh-TW"); 
+            this.Culture = CultureInfo.GetCultureInfo("zh-TW");
         }
-
-        private readonly JiebaSegmenter _jieba;
-
-        public CultureInfo Culture { get; } 
-
-        string ITextSegmenter.Name => "Jieba.Net";
 
         public IImmutableList<string> Cut(string text) => this._jieba.Cut(text, true, true).ToImmutableArray();
 
@@ -43,7 +44,7 @@ namespace Yuuna.TextSegmention
                         this._jieba.AddWord(w);
                         Debug.WriteLine($"added: {w}");
                     }
-                } 
+                }
             }
         }
 
@@ -62,9 +63,8 @@ namespace Yuuna.TextSegmention
                         this._jieba.DeleteWord(w);
                         Debug.WriteLine($"deleted: {w}");
                     }
-                } 
+                }
             }
         }
-         
     }
 }

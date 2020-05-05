@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Patterns
 {
@@ -7,13 +8,14 @@ namespace Yuuna.Contracts.Patterns
     using System.Collections.Immutable;
     using System.Diagnostics;
     using System.Linq;
+
     using Yuuna.Contracts.Modules;
     using Yuuna.Contracts.Semantics;
 
     public sealed class Pattern : IPattern
     {
         private readonly ImmutableArray<IGroup>.Builder _groupBuilder;
-        private readonly ImmutableArray<string>.Builder _keyBuilder;
+        private readonly ImmutableArray<string>.Builder _namesBuilder;
         private IImmutableList<IGroup> _groups;
 
         public int Count
@@ -25,21 +27,21 @@ namespace Yuuna.Contracts.Patterns
             }
         }
 
-        public IImmutableList<string> SequentialKeys { get; private set; }
+        public IImmutableList<string> Groups { get; private set; }
 
         public Guid Owner { get; }
 
         internal Pattern(ModuleBase owner)
         {
-            this._keyBuilder = ImmutableArray.CreateBuilder<string>();
+            this._namesBuilder = ImmutableArray.CreateBuilder<string>();
             this._groupBuilder = ImmutableArray.CreateBuilder<IGroup>();
             this.Owner = owner.Id;
         }
 
         public bool Equals(IPattern other)
         {
-            Debug.Assert(this.SequentialKeys != null);
-            return this.SequentialKeys.SequenceEqual(other.SequentialKeys);
+            Debug.Assert(this.Groups != null);
+            return this.Groups.SequenceEqual(other.Groups);
         }
 
         public IImmutableList<IGroup> ToImmutable()
@@ -52,15 +54,14 @@ namespace Yuuna.Contracts.Patterns
         {
             if (g == null)
                 return;
-            this._keyBuilder.Add(g.Key);
+            this._namesBuilder.Add(g.Name);
             this._groupBuilder.Add(g);
         }
 
         internal void Immute()
         {
-            this.SequentialKeys = this._keyBuilder.ToImmutable();
+            this.Groups = this._namesBuilder.ToImmutable();
             this._groups = this._groupBuilder.ToImmutable();
         }
-
     }
 }

@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Yuuna.TextDebugger</AssemblyName>
+    <RootNamespace>Yuuna.TextDebugger</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

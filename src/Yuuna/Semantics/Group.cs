@@ -1,5 +1,7 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Semantics
 {
     using System;
@@ -7,6 +9,7 @@ namespace Yuuna.Semantics
     using System.Collections.Immutable;
     using System.Diagnostics;
 
+    using Yuuna.Common.Utils;
     using Yuuna.Contracts.Semantics;
 
     /// <summary>
@@ -19,7 +22,7 @@ namespace Yuuna.Semantics
         /// <summary>
         /// 群組名稱。
         /// </summary>
-        public string Key { get; }
+        public string Name { get; }
 
         /// <summary>
         /// 建立新的群體物件實體。
@@ -28,7 +31,7 @@ namespace Yuuna.Semantics
         internal Group(string key)
         {
             Debug.Assert(!string.IsNullOrWhiteSpace(key), "'groupName' can't be null or empty.");
-            this.Key = key;
+            this.Name = key;
             this._synonyms = ImmutableArray.CreateBuilder<ISynonym>();
         }
 
@@ -40,10 +43,7 @@ namespace Yuuna.Semantics
         /// <exception cref="ArgumentNullException"/>
         public ISynonym AppendOrCreate(IEnumerable<string> words, StringComparer stringComparer = null)
         {
-            if (words is null)
-                throw new ArgumentNullException(nameof(words));
-
-            //Console.WriteLine(string.Join(":", words));
+            words.ThrowIfNull(nameof(words));
 
             foreach (var synonym in this._synonyms)
             {
@@ -60,9 +60,23 @@ namespace Yuuna.Semantics
             return inst;
         }
 
+        /// <summary>
+        /// 比對兩個 <see cref="IGroup"/> 物件的群組名稱是否相等。
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public bool Equals(IGroup other)
         {
-            return this.Key.Equals(other.Key);
+            return this.Name.Equals(other.Name);
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="word"></param>
+        /// <returns></returns>
+        public bool Equals(string word)
+        {
+            return this.TryGetSynonym(word, out _);
         }
 
         public IImmutableList<ISynonym> ToImmutable()

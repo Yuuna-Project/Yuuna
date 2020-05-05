@@ -1,5 +1,7 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Semantics
 {
     using System;
@@ -59,7 +61,7 @@ namespace Yuuna.Semantics
             lock (this._lock)
             {
                 var g = new Group(key);
-                this._groups.Add(g.Key, g);
+                this._groups.Add(g.Name, g);
                 return g;
             }
         }

@@ -1,19 +1,21 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Interaction.AspNetCore
 {
-    using System.Threading.Tasks; 
-    using Yuuna.Contracts.Interaction;
-    using Yuuna.TextSegmention;
+    using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.AspNetCore.Builder;
     using Microsoft.Extensions.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using System;
 
-    public sealed class WebHost 
+    using System.Threading.Tasks;
+
+    using Yuuna.Contracts.Evaluation;
+    using Yuuna.Contracts.Interaction;
+    using Yuuna.TextSegmention;
+
+    public class Startup
     {
         public static async Task RunAsync()
         {
@@ -27,43 +29,40 @@ namespace Yuuna.Interaction.AspNetCore
                 .Build()
                 .RunAsync();
         }
-         
 
-       private class Startup
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            // This method gets called by the runtime. Use this method to add services to the container.
-            public void ConfigureServices(IServiceCollection services)
+            if (env.IsDevelopment())
             {
-                var canResponses = new Response[]
-                {
+                app.UseDeveloperExceptionPage();
+            }
+
+            //app.UseHttpsRedirection();
+
+            app.UseRouting();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+            var segmenter = new JiebaTextSegmenter();
+            var canResponses = new Response[]
+            {
                     (Moods.Sad, "我不清楚你想做什麼 OvQ"),
                     (Moods.Sad, "我不懂你想幹嘛 QAQ"),
                     (Moods.Sad, "我不知道你想幹嘛 OHQ"),
-                };
-                services.AddSingleton(new Actor(new JiebaTextSegmenter(), canResponses, default, ModuleManager.Instance.Modules));
-
-                services.AddControllers();
-            }
-
-            // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-            public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-            {
-                if (env.IsDevelopment())
-                {
-                    app.UseDeveloperExceptionPage();
-                }
-
-                //app.UseHttpsRedirection();
-
-                app.UseRouting();
-
-                app.UseEndpoints(endpoints =>
-                {
-                    endpoints.MapControllers();
-                });
-            }
+            };
+            var modules = ModuleManager.Instance.Modules;
+            var strategy = default(IStrategy);
+            var actor = new Actor(segmenter, canResponses, strategy, modules);
+            services.AddSingleton(actor);
+            services.AddControllers();
         }
-
     }
 }

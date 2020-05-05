@@ -1,26 +1,31 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Modules
 {
     using System;
-    using System.Collections.Immutable;
-    using System.Runtime.Loader;
+    using System.Dynamic;
+
     using Yuuna.Common.Configuration;
-    using Yuuna.Contracts.Optimization;
     using Yuuna.Contracts.Patterns;
     using Yuuna.Contracts.Semantics;
     using Yuuna.Contracts.TextSegmention;
-    public abstract class ModuleBase 
-    {
-        /// <summary>
-        /// 中繼資料。
-        /// </summary> 
-        public IModuleMetadata Metadata { get; }
 
+    public abstract class ModuleBase
+    {
         private readonly ConfigProxy _configProxy;
 
+        private bool _initialized;
+
         public Guid Id { get; }
+
+        /// <summary>
+        /// 中繼資料。
+        /// </summary>
+        public IModuleMetadata Metadata { get; }
+
+        internal IRule Patterns { get; private set; }
 
         public ModuleBase()
         {
@@ -31,25 +36,25 @@ namespace Yuuna.Contracts.Modules
             this._configProxy.PropertyChanged += (sender, e) => (sender as ConfigProxy).Save();
         }
 
-        private bool _initialized;
-
         /// <summary>
         /// 初始化模組
         /// </summary>
         /// <param name="textSegmenter">分詞器</param>
         /// <param name="groupManager">群組管理</param>
-        internal void Initialize(ITextSegmenter textSegmenter, IGroupManager groupManager, out IPatternSet patterns)
+        internal void Initialize(ITextSegmenter textSegmenter, IGroupManager groupManager, out IRule patterns)
         {
             patterns = null;
             if (!this._initialized)
             {
                 try
                 {
-                    this.BeforeInitialize(this._configProxy);
+                    var session = new ExpandoObject();
+
+                    this.BeforeInitialize(this._configProxy, session);
                     patterns = new PatternFactory(this);
-                    this.BuildPatterns(groupManager, patterns as IPatternBuilder, this._configProxy);
+                    this.BuildPatterns(groupManager, patterns as IPatternBuilder, this._configProxy, session);
                     textSegmenter.Load(groupManager);
-                    this.AfterInitialize();
+                    this.AfterInitialize(this._configProxy, session);
                     this._initialized = true;
                     this.Patterns = patterns;
                 }
@@ -60,18 +65,17 @@ namespace Yuuna.Contracts.Modules
             }
         }
 
-        internal IPatternSet Patterns { get; private set; }
+        /// <summary>
+        /// 在初始化後引發。
+        /// </summary>
+        protected virtual void AfterInitialize(dynamic config, dynamic session)
+        {
+        }
 
         /// <summary>
         /// 在初始化前引發。
         /// </summary>
-        protected virtual void BeforeInitialize(dynamic config)
-        {
-        }
-        /// <summary>
-         /// 在初始化後引發。
-         /// </summary>
-        protected virtual void AfterInitialize()
+        protected virtual void BeforeInitialize(dynamic config, dynamic session)
         {
         }
 
@@ -81,6 +85,6 @@ namespace Yuuna.Contracts.Modules
         /// <param name="g"></param>
         /// <param name="p"></param>
         /// <param name="config"></param>
-        protected abstract void BuildPatterns(IGroupManager g, IPatternBuilder p, dynamic config);
+        protected abstract void BuildPatterns(IGroupManager g, IPatternBuilder p, dynamic config, dynamic session);
     }
 }

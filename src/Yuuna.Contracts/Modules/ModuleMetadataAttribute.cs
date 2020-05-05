@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Modules
 {
@@ -9,16 +10,18 @@ namespace Yuuna.Contracts.Modules
     [AttributeUsage(AttributeTargets.Class)]
     public sealed class ModuleMetadataAttribute : Attribute, IModuleMetadata
     {
+        public string Author { get; set; }
+
+        public string Description { get; set; }
+
+        public string Name { get; private set; }
+
+        public string Url { get; set; }
+
         public ModuleMetadataAttribute(string name)
         {
             this.Name = name;
         }
-
-        public string Name { get; private set; }
-        public string Author { get; set; }
-        public string Url { get; set; }
-        public string Description { get; set; }
-
 
         internal static IModuleMetadata GetMetadata(Type type)
         {

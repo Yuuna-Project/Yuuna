@@ -1,5 +1,6 @@
-﻿
-
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Common.Serialization
 {
@@ -7,7 +8,6 @@ namespace Yuuna.Common.Serialization
 
     internal sealed class YamlSerializer : Serializer
     {
-        
         protected override T OnDeserialize<T>(TextReader reader)
         {
             var deserializer = new YamlDotNet.Serialization.Deserializer();

@@ -1,13 +1,15 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
-namespace Yuuna.Common.Utilities
+namespace Yuuna.Common.Linq
 {
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
-    using Yuuna.Common.Linq;
+
+    using Yuuna.Common.Utils;
 
     public static class RandomHelper
     {
@@ -23,8 +25,7 @@ namespace Yuuna.Common.Utilities
         /// <exception cref="ArgumentNullException"/>
         public static T RandomTakeOne<T>(this IEnumerable<T> collection)
         {
-            if (collection == null)
-                throw new ArgumentNullException(nameof(collection));
+            collection.ThrowIfNull(nameof(collection));
 
             var list = collection.ToArray();
             if (list.Length == 0)
@@ -45,7 +46,7 @@ namespace Yuuna.Common.Utilities
             }
             else
             {
-                GenRnd:
+            GenRnd:
                 var rnd = new Random(Guid.NewGuid().GetHashCode());
                 var newIndex = rnd.Next(0, list.Length);
                 if (!s_manySwitcher.TryGetValue(collection, out var index))
@@ -57,7 +58,6 @@ namespace Yuuna.Common.Utilities
                 return list[newIndex];
             }
         }
-
 
         public static T RandomTakeOne<T>(this IImmutable<T> collection)
         {

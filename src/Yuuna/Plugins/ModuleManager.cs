@@ -1,20 +1,22 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Runtime.Loader;
     using System.IO;
-    using System.Linq.Expressions;
-    using System.Reflection;
-     
+
     public sealed class ModuleManager
     {
+        private const string PATH = "./modules";
         private static volatile ModuleManager s_inst;
         private static object s_lock = new object();
+        private readonly List<ModuleCoupler> _modules;
+
+        private readonly DirectoryInfo _modulesFolder;
+
         public static ModuleManager Instance
         {
             get
@@ -30,14 +32,10 @@ namespace Yuuna
                     }
                 }
                 return s_inst;
-
             }
         }
 
-        private const string PATH = "./modules";
-
-        private readonly List<ModuleCoupler> _modules;
-        private readonly DirectoryInfo _modulesFolder;
+        public IReadOnlyList<ModuleCoupler> Modules => this._modules;
 
         private ModuleManager()
         {
@@ -53,15 +51,10 @@ namespace Yuuna
             }
         }
 
-        public IReadOnlyList<ModuleCoupler> Modules => this._modules;
-
-        private void Scan()
+        public void ReloadAll()
         {
-            foreach (var moduleFolder in this._modulesFolder.EnumerateDirectories())
-            {
-                var n = new ModuleCoupler(moduleFolder.EnumerateFiles("*.deps.json"), moduleFolder.EnumerateFiles("*.dll"));
-                this._modules.Add(n);
-            }
+            this.UnloadAll();
+            this.Scan();
         }
 
         public void UnloadAll()
@@ -75,10 +68,13 @@ namespace Yuuna
             this._modules.Clear();
         }
 
-        public void ReloadAll()
+        private void Scan()
         {
-            this.UnloadAll();
-            this.Scan();
+            foreach (var moduleFolder in this._modulesFolder.EnumerateDirectories())
+            {
+                var n = new ModuleCoupler(moduleFolder.EnumerateFiles("*.deps.json"), moduleFolder.EnumerateFiles("*.dll"));
+                this._modules.Add(n);
+            }
         }
     }
 }

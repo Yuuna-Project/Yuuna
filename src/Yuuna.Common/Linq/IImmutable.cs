@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Common.Linq
 {
@@ -12,7 +13,7 @@ namespace Yuuna.Common.Linq
     public interface IImmutable<T>
     {
         /// <summary>
-        /// 轉換成不可變清單以使用 Linq 。
+        /// 轉換成不可變清單。
         /// </summary>
         /// <returns></returns>
         IImmutableList<T> ToImmutable();

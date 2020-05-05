@@ -1,11 +1,12 @@
-﻿
-
-
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Common.Serialization
 {
-    using System.IO;
     using Nett;
+
+    using System.IO;
 
     internal sealed class TomlSerializer : Serializer
     {

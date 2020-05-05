@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Recorders
 {
@@ -14,4 +15,4 @@ namespace Yuuna.Contracts.Recorders
 
         void Stop();
     }
-} 
+}

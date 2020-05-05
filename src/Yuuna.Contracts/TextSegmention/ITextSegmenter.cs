@@ -1,5 +1,7 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Contracts.TextSegmention
 {
     using Semantics;
@@ -34,7 +36,6 @@ namespace Yuuna.Contracts.TextSegmention
         /// </summary>
         /// <param name="manager">群組管理器。</param>
         void Load(IGroupManager manager);
-
 
         /// <summary>
         /// 從 <paramref name="manager"/> 移除字典。

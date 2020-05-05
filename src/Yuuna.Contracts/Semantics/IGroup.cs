@@ -1,5 +1,7 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Contracts.Semantics
 {
     using System;
@@ -10,12 +12,12 @@ namespace Yuuna.Contracts.Semantics
     /// <summary>
     /// 群體物件。用來存放相同性質類型的同義詞物件。
     /// </summary>
-    public interface IGroup : IEquatable<IGroup>, IImmutable<ISynonym>
+    public interface IGroup : IEquatable<IGroup>, IImmutable<ISynonym>, IEquatable<string>
     {
         /// <summary>
         /// 群組名稱。
         /// </summary>
-        string Key { get; }
+        string Name { get; }
 
         /// <summary>
         /// 嘗試使用交集取得同義詞物件。 若具有交集則將參數中的值附加至該搜尋到的同義詞物件中；若無，則透過參數建立新的同義詞實體並傳回。

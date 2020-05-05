@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Interaction
 {
@@ -44,15 +45,6 @@ namespace Yuuna.Contracts.Interaction
             return new Response(Moods.Normal, message);
         }
 
-        [EditorBrowsable(EditorBrowsableState.Never)]
-        public void Deconstruct(out Mood mood, out string message)
-        {
-            mood = this.Mood;
-            message = this.Message;
-        }
-
-        public override string ToString() => this.Message;
-
         public static Response operator +(Response r, string s)
         {
             return new Response(r.Mood, r.Message + s);
@@ -62,5 +54,14 @@ namespace Yuuna.Contracts.Interaction
         {
             return new Response(r.Mood, s + r.Message);
         }
+
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public void Deconstruct(out Mood mood, out string message)
+        {
+            mood = this.Mood;
+            message = this.Message;
+        }
+
+        public override string ToString() => this.Message;
     }
 }

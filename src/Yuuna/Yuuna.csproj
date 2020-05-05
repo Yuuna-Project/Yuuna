@@ -5,6 +5,14 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <ApplicationIcon />
     <StartupObject />
+    <Authors>Yuuna-Project@Developers</Authors>
+    <Company>Yuuna-Project</Company>
+    <Copyright>Copyright © Yuuna-Project 2020</Copyright>
+    <Product />
+    <Description />
+    <PackageProjectUrl>https://github.com/Yuuna-Project</PackageProjectUrl>
+    <PackageIcon>avatar.jpg</PackageIcon>
+    <RepositoryUrl>https://github.com/Yuuna-Project/Yuuna-Project</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +33,10 @@
   <ItemGroup>
     <None Update="secret.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="..\..\img\avatar.jpg">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
     </None>
   </ItemGroup>
 

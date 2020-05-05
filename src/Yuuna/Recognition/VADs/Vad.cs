@@ -1,16 +1,14 @@
-﻿
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Recognition.VADs
 {
     using NAudio.Wave;
 
     using System;
-    using System.Collections.Concurrent;
     using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Linq;
     using System.Reflection;
-    using System.Threading.Tasks;
 
     public class Vad
     {
@@ -18,6 +16,18 @@ namespace Yuuna.Recognition.VADs
         private readonly WaveInEvent _wave;
         private volatile bool _started = false;
 
+        private volatile bool _state;
+
+        private double? _threshold;
+
+        public event EventHandler<VadStateEventArgs> AudioStateChanged;
+
+        [DefaultValue(-55.0)]
+        public double? Threshold
+        {
+            get => this._threshold;
+            set => this._threshold = value.HasValue ? value : (double)typeof(Vad).GetProperty(nameof(this.Threshold)).GetCustomAttribute<DefaultValueAttribute>().Value;
+        }
 
         public Vad()
         {
@@ -30,19 +40,6 @@ namespace Yuuna.Recognition.VADs
             this._wave.DataAvailable += this.OnDataAvailable;
             this.Threshold = null;
         }
-         
-
-        [DefaultValue(-55.0)]
-        public double? Threshold
-        {
-            get => this._threshold;
-            set => this._threshold = value.HasValue ? value : (double)typeof(Vad).GetProperty(nameof(this.Threshold)).GetCustomAttribute<DefaultValueAttribute>().Value;
-        }
-
-        private double? _threshold;
-
-
-        public event EventHandler<VadStateEventArgs> AudioStateChanged;
 
         public void Start()
         {
@@ -57,8 +54,6 @@ namespace Yuuna.Recognition.VADs
                 this._started = true;
             }
         }
-
-        private volatile bool _state;
 
         protected virtual void OnDataAvailable(object sender, WaveInEventArgs e)
         {
@@ -91,9 +86,6 @@ namespace Yuuna.Recognition.VADs
             {
                 AudioStateChanged?.Invoke(this, new VadStateEventArgs(VadState.Detect, decibel));
             }
-
         }
-
     }
-
 }

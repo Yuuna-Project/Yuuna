@@ -1,10 +1,11 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Patterns
 {
+    using Yuuna.Contracts.Evaluation;
     using Yuuna.Contracts.Interaction;
-    using Yuuna.Contracts.Optimization;
 
     public delegate Response Incomplete(Match m);
 

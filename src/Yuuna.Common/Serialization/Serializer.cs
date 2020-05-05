@@ -1,10 +1,10 @@
-﻿
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
+
 namespace Yuuna.Common.Serialization
 {
-    using System;
-    using System.Collections.Generic;
     using System.IO;
-    using System.Text;
 
     public abstract class Serializer : ISerializer
     {
@@ -22,8 +22,6 @@ namespace Yuuna.Common.Serialization
             }
         }
 
-        protected abstract T OnDeserialize<T>(TextReader reader);
-
         public bool TrySerialize<T>(TextWriter writer, T graph)
         {
             try
@@ -37,8 +35,8 @@ namespace Yuuna.Common.Serialization
             }
         }
 
+        protected abstract T OnDeserialize<T>(TextReader reader);
+
         protected abstract void OnSerialize<T>(TextWriter writer, T graph);
-
-
     }
 }

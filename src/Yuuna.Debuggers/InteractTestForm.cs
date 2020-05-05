@@ -1,5 +1,5 @@
 ﻿
-namespace Yuuna.Interaction.WinForms.Test
+namespace Yuuna.TextDebugger
 {
     using Newtonsoft.Json;
     using RestSharp;
@@ -14,13 +14,13 @@ namespace Yuuna.Interaction.WinForms.Test
     using System.Threading.Tasks;
     using System.Windows.Forms;
 
-    public partial class Form1 : Form
+    public partial class InteractTestForm : Form
     {
         private readonly ListBox _history;
         private readonly TextBox _input;
         private readonly RestClient client;
 
-        public Form1()
+        public InteractTestForm()
         {
             this.InitializeComponent();
             this.Text = "Yuuna's Debugger Form";
@@ -44,8 +44,9 @@ namespace Yuuna.Interaction.WinForms.Test
 
 
             _history = new ListBox();
+            _history.HorizontalScrollbar = true;
             _history.Dock = DockStyle.Fill;
-            _history.Enabled = false;
+           // _history.Enabled = false;
             
             _history.BorderStyle = BorderStyle.None;
 
@@ -63,6 +64,23 @@ namespace Yuuna.Interaction.WinForms.Test
                     if (string.IsNullOrWhiteSpace(req))
                         return;
 
+                    if (req.StartsWith('/'))
+                    {
+                        switch (req.AsSpan(1).ToString())
+                        {
+                            case "cls":
+                            case "clear":
+                                {
+                                    _history.Items.Clear();
+                                    break;
+                                }
+
+                            default:
+                                break;
+                        }
+                        return;
+                    }
+
                     this._history.Items.Add("Me:  " + req);
 
                     int visibleItems = _history.ClientSize.Height / _history.ItemHeight;
@@ -71,10 +89,12 @@ namespace Yuuna.Interaction.WinForms.Test
                     if (TrySend(req, out var resp))
                         this._history.Items.Add("Bot: " + resp.message);
                     else
-                        this._history.Items.Add("Sys: " + resp.message); 
+                        this._history.Items.Add("Error: " + resp.message); 
                     
                     visibleItems = _history.ClientSize.Height / _history.ItemHeight;
                     _history.TopIndex = Math.Max(_history.Items.Count - visibleItems + 1, 0);
+
+                    _history.SelectedItem = null;
                 }
             };
             this.Controls.Add(_input);
@@ -99,12 +119,17 @@ namespace Yuuna.Interaction.WinForms.Test
                     Mood = default(string),
                     Text = default(string),
                 });
+                if(result is null)
+                {
+                    throw new Exception("無法處理請求，Yuuna的核心系統可能尚未開啟");
+                }
+
                 m = (result.Mood, result.Message);
                 return true;
             }
-            catch
+            catch(Exception e)
             {
-                m = ("Sad", "無法處理請求");
+                m = ("Sad", e.Message);
             }
             return false;
         }

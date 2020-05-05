@@ -1,11 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace Yuuna.Interaction.WinForms.Test
+namespace Yuuna.TextDebugger
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
     static class Program
     {
         /// <summary>
@@ -17,7 +18,7 @@ namespace Yuuna.Interaction.WinForms.Test
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new InteractTestForm());
         }
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace Yuuna.Interaction.WinForms.Test
+﻿namespace Yuuna.TextDebugger
 {
-    partial class Form1
+    partial class InteractTestForm
     {
         /// <summary>
         ///  Required designer variable.

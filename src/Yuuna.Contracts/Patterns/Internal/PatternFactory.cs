@@ -1,5 +1,6 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Patterns
 {
@@ -7,12 +8,12 @@ namespace Yuuna.Contracts.Patterns
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Collections.Immutable;
-    using System.Diagnostics;
+
     using Yuuna.Common.Artisan.Cascade;
     using Yuuna.Contracts.Modules;
     using Yuuna.Contracts.Semantics;
 
-    internal sealed class PatternFactory : Initial<InvokeBuilder, IPattern>, IPatternSet, IPatternBuilder
+    internal sealed class PatternFactory : Initial<InvokeBuilder, IPattern>, IRule, IPatternBuilder
     {
         private readonly ConcurrentDictionary<IPattern, Bag> _list;
         private readonly ModuleBase _owner;
@@ -46,7 +47,7 @@ namespace Yuuna.Contracts.Patterns
         }
 
         protected override void OnCompleted(Queue<object> session)
-        {                                              
+        {
             var ge = new Bag
             {
                 Pattern = session.Dequeue() as IPattern,

@@ -1,14 +1,12 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Contracts.Recognition.Speech
 {
-    using System.ComponentModel;
-
     public interface IAlternative
     {
         double Confidence { get; }
         string Transcript { get; }
-
     }
 }

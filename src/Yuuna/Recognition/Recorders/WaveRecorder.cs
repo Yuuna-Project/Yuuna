@@ -1,22 +1,21 @@
-﻿// Author: Orlys
-// Github: https://github.com/Orlys
+﻿// Author: Yuuna-Project@Orlys
+// Github: github.com/Orlys
+// Contact: orlys@yuuna-project.com
 
 namespace Yuuna.Recognition.Speech
 {
     using NAudio.Wave;
 
     using System;
-    using System.Collections.Generic;
     using System.IO;
 
     using Yuuna.Contracts.Recorders;
 
-
     public class WaveRecorder : IRecorder
     {
         private readonly object _lock = new object();
-        private readonly WaveInEvent _wave;
         private readonly MemoryStream _rawStream;
+        private readonly WaveInEvent _wave;
         private volatile bool _started = false;
 
         public event Action<Stream> Completed;
@@ -28,7 +27,6 @@ namespace Yuuna.Recognition.Speech
 
             this._wave.DataAvailable += this.OnDataAvailable;
         }
-
 
         public void Start()
         {
